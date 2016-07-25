@@ -1,0 +1,21 @@
+<section class="posts">
+    {{#foreach posts}}
+    <a class="card" href="{{url}}">
+        <article
+            class="post {{post_class}}"
+            itemscope=""
+            itemtype="http://schema.org/Article"
+        >
+            <time class="post__date" datetime="{{date format="YYYY-MM-DD"}}">
+                {{date format="DD MMMM YYYY"}}
+            </time>
+            <h2 itemprop="headline">{{title}}</h2>
+            <section class="body">
+                <p itemprop="description">{{excerpt}}</p>
+            </section>
+        </article>
+    </a>
+    {{/foreach}}
+
+    {{pagination}}
+</section>

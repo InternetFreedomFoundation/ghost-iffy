@@ -1,0 +1,28 @@
+{{!< default}}
+
+{{! The comment above "< default" means - insert everything in this file into
+the {body} of the default.hbs template, which contains our header/footer. }}
+
+{{! Everything inside the #post tags pulls data from the post }}
+{{#post}}
+
+<main class="post-view-content" role="main">
+    <article class="{{post_class}}">
+        <h1>{{ title }}</h1>
+
+        <section class="post-content">
+          {{ content }}
+
+          <div class="post-tags">
+            {{tags separator=""}}
+          </div>
+        </section>
+
+        <section class="post-footer">
+            <time class="post__date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMMM YYYY"}}</time>
+            {{> share}}
+        </section>
+    </article>
+</main>
+
+{{/post}}

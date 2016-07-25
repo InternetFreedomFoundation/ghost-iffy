@@ -1,0 +1,14 @@
+{{!< default}}
+
+<main>
+    {{#get "posts" slug="home"}}
+      {{#posts.[0]}}
+      <div class="post-content">
+        {{content}}
+      </div>
+      {{/posts.[0]}}
+    {{/get}}
+
+    {{> loop}}
+
+</main>
