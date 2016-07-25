@@ -118,9 +118,11 @@ fieldset > input {
 	border-radius: 0;
 	display: block;
 	flex: 1 1 auto;
+    width: 0;
 }
 fieldset > input[type=button], fieldset > input[type=submit] {
 	flex: 0 0 auto;
+    width: auto;
 }
 fieldset > input:first-child { border-radius: 2px 0 0 2px; }
 fieldset > input:last-child { border-radius: 0 2px 2px 0; }
