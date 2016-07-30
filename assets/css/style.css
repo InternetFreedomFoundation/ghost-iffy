@@ -40,7 +40,10 @@ svg:not(:root) { overflow: hidden; }
 figure { margin: 1em 40px; }
 hr { box-sizing: content-box; height: 0; }
 pre { overflow: auto; }
-code, kbd, pre, samp { font-family: monospace, monospace; font-size: 1em; }
+code, kbd, pre, samp {
+    font-family: monospace, monospace;
+    font-size: 1em;
+}
 button, input, optgroup, select, textarea {
     color: inherit;
     font: inherit;
@@ -88,20 +91,30 @@ a:hover { color: #c75; }
 
 /* Forms */
 
-input {
-	line-height: 2em;
+input, label, textarea {
+	line-height: 1em;
 	padding: 1em;
 	border-radius: 2px;
-	border: none;
+	border: 1px solid #cba;
 	background: #fff;
 	color: #543;
 	font-weight: 400;
+    resize: vertical;
 }
+
+label { border: none; background: transparent; }
 
 input[type="button"], input[type="submit"] {
 	background: #a64;
+    border-color: #a64;
 	color: #fff;
 	font-weight: 700;
+}
+
+input[type=checkbox], input[type=radio] {
+    vertical-align: middle;
+    margin: -0.15em 0.3em 0 0;
+
 }
 
 input[type=button]:hover, input[type=submit]:hover {
@@ -109,23 +122,60 @@ input[type=button]:hover, input[type=submit]:hover {
 }
 
 fieldset {
-	border: none;
+    border: none;
 	padding: 0;
 	display: flex;
 	flex-direction: row;
+    margin: 1em 0;
 }
-fieldset > input {
+
+fieldset.boxes {
+    flex-wrap: wrap;
+}
+
+fieldset.stacked { flex-direction: column; }
+
+fieldset > input,
+fieldset > label,
+fieldset > textarea {
 	border-radius: 0;
+    border-left-style: none;
+    border-left-style: none;
 	display: block;
-	flex: 1 1 auto;
+	flex: 4 4 auto;
     width: 0;
 }
-fieldset > input[type=button], fieldset > input[type=submit] {
+
+
+fieldset > label {
+    background: #cba;
+    border: 1px solid #cba;
+    flex: 1 1 auto;
+    width: auto;
+}
+fieldset > input[type=button],
+fieldset > input[type=submit] {
 	flex: 0 0 auto;
     width: auto;
 }
-fieldset > input:first-child { border-radius: 2px 0 0 2px; }
-fieldset > input:last-child { border-radius: 0 2px 2px 0; }
+fieldset > input:first-child,
+fieldset > label:first-child,
+fieldset > textarea:first-child {
+    border-radius: 2px 0 0 2px;
+    border-left-style: solid;
+}
+
+fieldset > input:last-child,
+fieldset > label:last-child,
+fieldset > textarea:last-child {
+    border-radius: 0 2px 2px 0;
+    border-right-style: solid;
+}
+
+
+.conditional { display: none; }
+.conditional.show { display: block; }
+
 
 /* Layout */
 
@@ -217,22 +267,6 @@ header {
         border-bottom: 1px solid #a75;
     }
 
-	nav.primary li a {
-		padding-left: 2em;
-	}
-
-	nav li.nav-home a,
-	nav li.nav-about a,
-	nav li.nav-issues a,
-	nav li.nav-campaigns a,
-	nav li.nav-projects a,
-	nav li.nav-support a {
-		padding-left: 0;
-		font-weight: 700;
-	}
-
-    nav li.nav-home { display: none; }
-
 main {
 	flex: 0 1 auto;
 	order: 2;
@@ -300,9 +334,8 @@ main {
 
 
 @media screen and (max-width: 768px) {
-    .wrapper {
-        flex-direction: column;
-    }
+    .wrapper { flex-direction: column; }
+    .wrapper::before { display: none; }
 
     header { flex-direction: row; }
 
@@ -328,8 +361,6 @@ main {
     header .menu.show {
         display: block;
     }
-
-    nav li.nav-home { display: block; }
 
     header nav.primary { border-top: none; }
 }

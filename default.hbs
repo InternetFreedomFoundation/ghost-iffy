@@ -67,6 +67,18 @@
 						return false;
 					}
 				});
+
+				$(document.body).click(function (event) {
+					var toggle;
+					if(
+						event.target.tagName === 'INPUT' &&
+						event.target.type === 'checkbox' &&
+						event.target.dataset.toggle
+					) {
+						toggle = event.target.dataset.toggle;
+						$('.if-' + toggle).toggleClass('show');
+					};
+				});
 			});
 		</script>
 
