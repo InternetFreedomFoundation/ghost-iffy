@@ -91,20 +91,43 @@ a:hover { color: #c75; }
 
 /* Forms */
 
-input, label, textarea {
-	line-height: 1em;
+button, input, select, textarea {
+    line-height: 1em;
 	padding: 1em;
 	border-radius: 2px;
 	border: 1px solid #cba;
-	background: #fff;
-	color: #543;
 	font-weight: 400;
-    resize: vertical;
 }
 
-label { border: none; background: transparent; }
+button:hover, input:hover, select:hover, textarea:hover {
+    border-color: #a64;
+}
 
-input[type="button"], input[type="submit"] {
+button:focus, input:focus, select:focus, textarea:focus {
+    border-color: #c75;
+}
+
+input[type=text],
+input[type=number],
+input[type=email],
+input[type=password],
+textarea {
+    background: #fff;
+    color: #543;
+    resize: vertical;
+    width: 100%;
+}
+
+label {
+    line-height: 1em;
+    padding: 1em 0;
+}
+
+label:hover {
+    color: #a64;
+}
+
+button, input[type="button"], input[type="submit"] {
 	background: #a64;
     border-color: #a64;
 	color: #fff;
@@ -122,7 +145,8 @@ input[type=button]:hover, input[type=submit]:hover {
 }
 
 fieldset {
-    border: none;
+    border: 1px solid #cba;
+    border-radius: 3px;
 	padding: 0;
 	display: flex;
 	flex-direction: row;
@@ -139,8 +163,7 @@ fieldset > input,
 fieldset > label,
 fieldset > textarea {
 	border-radius: 0;
-    border-left-style: none;
-    border-left-style: none;
+    border: none;
 	display: block;
 	flex: 4 4 auto;
     width: 0;
@@ -148,8 +171,8 @@ fieldset > textarea {
 
 
 fieldset > label {
+    padding: 1em;
     background: #cba;
-    border: 1px solid #cba;
     flex: 1 1 auto;
     width: auto;
 }
@@ -162,14 +185,12 @@ fieldset > input:first-child,
 fieldset > label:first-child,
 fieldset > textarea:first-child {
     border-radius: 2px 0 0 2px;
-    border-left-style: solid;
 }
 
 fieldset > input:last-child,
 fieldset > label:last-child,
 fieldset > textarea:last-child {
     border-radius: 0 2px 2px 0;
-    border-right-style: solid;
 }
 
 
