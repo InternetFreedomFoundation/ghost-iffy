@@ -324,7 +324,7 @@ main {
 		display: block;
 	}
 	a.card:hover {
-		text-shadow: 0 0 1em #c75;
+		color: #a64;
 	}
 
 		article.post {
@@ -341,6 +341,10 @@ main {
 				float: right;
 				line-height: 2em;
 			}
+
+            a.card:hover time {
+                color: #a64;
+            }
 
 	nav.pagination {
 		padding: 2em 2em 4em 2em;
