@@ -340,6 +340,7 @@ main {
 				color: #987;
 				float: right;
 				line-height: 2em;
+                margin-left: 2em;
 			}
 
             a.card:hover time {
