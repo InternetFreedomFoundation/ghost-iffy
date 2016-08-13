@@ -116,6 +116,7 @@ textarea {
     color: #543;
     resize: vertical;
     width: 100%;
+    box-sizing: border-box;
 }
 
 label {
@@ -144,7 +145,7 @@ input[type=button]:hover, input[type=submit]:hover {
 	background: #c75;
 }
 
-fieldset {
+.fieldset {
     border: 1px solid #cba;
     border-radius: 3px;
 	padding: 0;
@@ -153,15 +154,12 @@ fieldset {
     margin: 1em 0;
 }
 
-fieldset.boxes {
-    flex-wrap: wrap;
-}
-
-fieldset.stacked { flex-direction: column; }
-
-fieldset > input,
-fieldset > label,
-fieldset > textarea {
+.fieldset > input[type=text],
+.fieldset > input[type=number],
+.fieldset > input[type=email],
+.fieldset > input[type=password],
+.fieldset > label,
+.fieldset > textarea {
 	border-radius: 0;
     border: none;
 	display: block;
@@ -170,26 +168,26 @@ fieldset > textarea {
 }
 
 
-fieldset > label {
+.fieldset > label {
     padding: 1em;
     background: #cba;
     flex: 1 1 auto;
     width: auto;
 }
-fieldset > input[type=button],
-fieldset > input[type=submit] {
+.fieldset > input[type=button],
+.fieldset > input[type=submit] {
 	flex: 0 0 auto;
     width: auto;
 }
-fieldset > input:first-child,
-fieldset > label:first-child,
-fieldset > textarea:first-child {
+.fieldset > input:first-child,
+.fieldset > label:first-child,
+.fieldset > textarea:first-child {
     border-radius: 2px 0 0 2px;
 }
 
-fieldset > input:last-child,
-fieldset > label:last-child,
-fieldset > textarea:last-child {
+.fieldset > input:last-child,
+.fieldset > label:last-child,
+.fieldset > textarea:last-child {
     border-radius: 0 2px 2px 0;
 }
 
@@ -208,6 +206,7 @@ html, body {
 	display: flex;
 	flex-direction: row;
 	min-height: 100%;
+    overflow-x: hidden;
 }
 
 .wrapper::before {
@@ -259,7 +258,7 @@ header {
             display: none;
             flex: 0 0 auto;
             text-align: right;
-            padding: 2em;
+            padding: 1em 2em;
             border-left: 1px solid #c75;
         }
 
@@ -299,7 +298,18 @@ main {
 		background: #000;
 		padding: 30% 3em 3em 3em;
 		margin: -2em -2em 2em -2em;
+        position: relative;
 	}
+        .hero::before {
+            content: '';
+            display:block;
+            position:absolute;
+            left: 100%;
+            top: 0;
+            bottom: 0;
+            right: -999%;
+            background: inherit;
+        }
 		.hero h1 {
 			font-size: 2.52em;
 			font-weight: 700;
@@ -378,7 +388,12 @@ main {
     .logo #logo-text { width: 25%; }
 
     header, main { padding: 1em; position: relative; }
-    .hero { margin: -1em -1em 1em -1em; }
+    .hero {
+        margin: -1em -1em 1em -1em;
+        padding: 30% 1em 1em 1em;
+    }
+    .intro { padding: 2em 0; }
+    article.post { padding: 2em 0; }
 
     header, main { width: 100%; }
     header .menu {
