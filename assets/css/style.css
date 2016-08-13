@@ -110,6 +110,8 @@ button:focus, input:focus, select:focus, textarea:focus {
 input[type=text],
 input[type=number],
 input[type=email],
+input[type=url],
+input[type=tel],
 input[type=password],
 textarea {
     background: #fff;
@@ -157,6 +159,8 @@ input[type=button]:hover, input[type=submit]:hover {
 .fieldset > input[type=text],
 .fieldset > input[type=number],
 .fieldset > input[type=email],
+.fieldset > input[type=url],
+.fieldset > input[type=tel],
 .fieldset > input[type=password],
 .fieldset > label,
 .fieldset > textarea {
