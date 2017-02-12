@@ -236,6 +236,7 @@ header {
 }
 	.logo {
 		max-width: 15em;
+        max-height: 12em;
 		margin: 0 auto 0 auto;
 		display: flex;
         flex-direction: column;
@@ -255,8 +256,8 @@ header {
         }
         .logo .gap {
             display: none;
-            flex: 5 5 auto;
-            width: 50%;
+            flex: 1 1000 auto;
+            width: 60%;
         }
         .logo .toggle-menu {
             display: none;
@@ -289,6 +290,14 @@ header {
     nav.primary {
         border-top: 1px solid #a75;
         border-bottom: 1px solid #a75;
+    }
+
+    nav li.nav-separatorhack {
+        border-bottom: 1px solid #a75;
+        line-height: 0;
+        text-indent: -999999px;
+        height: 0;
+        margin: 2em -2em;
     }
 
 main {
@@ -361,6 +370,10 @@ main {
                 color: #a64;
             }
 
+            .post-template article.post {
+                border-bottom: none;
+            }
+
 	nav.pagination {
 		padding: 2em 2em 4em 2em;
 	}
@@ -377,8 +390,6 @@ main {
     .wrapper { flex-direction: column; }
     .wrapper::before { display: none; }
 
-    header { flex-direction: row; }
-
     .logo {
         flex-direction: row;
         padding: 0;
@@ -387,9 +398,9 @@ main {
         max-width: 100%;
     }
     .logo .toggle-menu, .logo .gap { display: block; }
-    .logo #logo-icon { width: 20%; }
-    .logo #logo-gap { width: 5%; }
-    .logo #logo-text { width: 25%; }
+    .logo #logo-icon { width: 16%; }
+    .logo #logo-gap { width: 4%; }
+    .logo #logo-text { width: 20%; }
 
     header, main { padding: 1em; position: relative; }
     .hero {
@@ -409,3 +420,26 @@ main {
 
     header nav.primary { border-top: none; }
 }
+
+.tag-campaign .wrapper { flex-direction: column; }
+.tag-campaign .wrapper::before { display: none; }
+.tag-campaign header { display: flex; flex-direction: row; order: 2; }
+.tag-campaign main { order: 1; }
+
+.tag-campaign .logo .toggle-menu, .tag-campaign .logo .gap { display: none; }
+.tag-campaign header .menu { display: block; }
+.tag-campaign .logo #logo-icon { width: 16%; }
+.tag-campaign .logo #logo-gap { width: 4%; }
+.tag-campaign .logo #logo-text { width: 20%; }
+
+
+.tag-campaign .logo {
+    flex-direction: row;
+    padding: 0;
+    border: none;
+    margin: 0 0 0 1em;
+    max-width: 15em;
+}
+
+.tag-campaign header, .tag-campaign main { width: 100%; }
+.tag-campaign header .menu .primary { display: none; }

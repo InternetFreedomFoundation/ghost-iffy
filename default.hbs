@@ -13,10 +13,11 @@
 
 	    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Palanquin:400,700">
 		<link rel="stylesheet" href="{{asset "css/style.css"}}">
+		<script src="{{asset "js/zepto.min.js"}}"></script>
 
 		{{ghost_head}}
 	</head>
-	<body class="{{body_class}}">
+	<body class="{{body_class}}{{tags autolink='off'}}">
 		<div class="wrapper">
 			{{{body}}}
 
@@ -58,7 +59,6 @@
 			</header>
 		</div>
 
-		<script src="{{asset "js/zepto.min.js"}}"></script>
 		<script>
 			$(function() {
 				$('.logo').click(function (event) {
