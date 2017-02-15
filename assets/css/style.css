@@ -91,7 +91,7 @@ a:hover { color: #c75; }
 
 /* Forms */
 
-button, input, select, textarea {
+button, input, select, textarea, a.button {
     line-height: 1em;
 	padding: 1em;
 	border-radius: 2px;
@@ -99,12 +99,20 @@ button, input, select, textarea {
 	font-weight: 400;
 }
 
-button:hover, input:hover, select:hover, textarea:hover {
+a.button { display: inline-block; }
+
+button:hover, input:hover, select:hover, textarea:hover, a.button:hover {
     border-color: #a64;
 }
 
-button:focus, input:focus, select:focus, textarea:focus {
+button:focus, input:focus, select:focus, textarea:focus, a.button:focus {
     border-color: #c75;
+}
+
+button[disabled], input[disabled], select[disabled], textarea[disabled] {
+    border-color: #ccc;
+    background-color: #ccc;
+    color: #999;
 }
 
 input[type=text],
@@ -130,7 +138,7 @@ label:hover {
     color: #a64;
 }
 
-button, input[type="button"], input[type="submit"] {
+button, input[type="button"], input[type="submit"], a.button {
 	background: #a64;
     border-color: #a64;
 	color: #fff;
@@ -432,7 +440,6 @@ main {
 .tag-campaign .logo #logo-gap { width: 4%; }
 .tag-campaign .logo #logo-text { width: 20%; }
 
-
 .tag-campaign .logo {
     flex-direction: row;
     padding: 0;
@@ -443,3 +450,16 @@ main {
 
 .tag-campaign header, .tag-campaign main { width: 100%; }
 .tag-campaign header .menu .primary { display: none; }
+
+#campaign-email-body {
+    height: 10em; overflow: auto;
+    background: #eee; border-radius: 3px;
+    border: 1px solid #ccc;
+    padding: 1em;
+}
+.campaign-email-field {
+    padding: 0 0.5em;
+}
+.campaign-email-field.copied::after {
+    content: 'Copied';
+}
