@@ -75,7 +75,15 @@ td, th { padding: 0; }
 /* Typography */
 
 html {
-	font: 400 15px Palanquin, Helvetica, Arial, sans-serif;
+	font: 400 15px -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Oxygen-Sans,
+                Ubuntu,
+                Cantarell,
+                "Helvetica Neue",
+                sans-serif;
 	line-height: 1.5em;
 	color: #654;
 }
@@ -450,6 +458,7 @@ main {
 
 .tag-campaign header, .tag-campaign main { width: 100%; }
 .tag-campaign header .menu .primary { display: none; }
+.tag-campaign article > h1 { display: none; }
 
 #campaign-email-body {
     height: 10em; overflow: auto;
@@ -459,7 +468,4 @@ main {
 }
 .campaign-email-field {
     padding: 0 0.5em;
-}
-.campaign-email-field.copied::after {
-    content: 'Copied';
 }

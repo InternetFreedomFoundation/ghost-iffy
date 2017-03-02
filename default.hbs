@@ -11,9 +11,8 @@
 
 	    <link rel="shortcut icon" href="{{asset "/favicon.ico"}}">
 
-	    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Palanquin:400,700">
 		<link rel="stylesheet" href="{{asset "css/style.css"}}">
-		<script src="{{asset "js/zepto.min.js"}}"></script>
+		<script src="{{asset "js/base.js"}}"></script>
 
 		{{ghost_head}}
 	</head>
@@ -59,35 +58,7 @@
 			</header>
 		</div>
 
-		<script>
-			$(function() {
-				$('.logo').click(function (event) {
-					if($('.toggle-menu').css('display') !== 'none') {
-						$('.menu').toggleClass('show');
-						return false;
-					}
-				});
-
-				$('input[type=radio]').change(function (event) {
-					if (!event.target.checked) return;
-					$('input[type=radio][name=' +
-						event.target.name + ']').each(function () {
-						console.log(event.target.name, this === event.target);
-						if (this !== event.target) $(this).change();
-					});
-				});
-
-				$('[data-toggle]').change(function (event) {
-					var toggle = event.target.dataset.toggle,
-						state = event.target.checked;
-
-					$('.if-' + toggle)[
-						state ? 'addClass' : 'removeClass']('show');
-				}).change();
-
-
-			});
-		</script>
+		<script src="{{asset "js/common.js"}}"></script>
 
 		{{ghost_foot}}
 	</body>
