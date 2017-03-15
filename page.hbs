@@ -7,6 +7,9 @@
 {{#post}}
 
 <main role="main">
+    {{#if image}}
+        <section class="hero" style="background-image:url('{{image}}');"></section>
+    {{/if}}
     <article class="{{post_class}}">
         <h1>{{title}}</h1>
         <section class="post-content">
