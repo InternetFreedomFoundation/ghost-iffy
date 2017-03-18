@@ -60,7 +60,7 @@ button[disabled], html input[disabled] { cursor: default; }
 button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
 input { line-height: normal; }
 input[type="checkbox"],
-input[type="radio"] { box-sizing: border-box; padding: 0; }
+/*input[type="radio"] { box-sizing: border-box; padding: 0; }*/
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button { height: auto; }
 input[type="search"] { -webkit-appearance: textfield; }
@@ -137,14 +137,14 @@ textarea {
     box-sizing: border-box;
 }
 
-label {
+/*label {
     line-height: 1em;
     padding: 1em 0;
 }
 
 label:hover {
     color: #a64;
-}
+}*/
 
 button, input[type="button"], input[type="submit"], a.button {
 	background: #a64;
@@ -153,11 +153,11 @@ button, input[type="button"], input[type="submit"], a.button {
 	font-weight: 700;
 }
 
-input[type=checkbox], input[type=radio] {
+/*input[type=checkbox], input[type=radio] {
     vertical-align: middle;
     margin: -0.15em 0.3em 0 0;
 
-}
+}*/
 
 input[type=button]:hover, input[type=submit]:hover {
 	background: #c75;
