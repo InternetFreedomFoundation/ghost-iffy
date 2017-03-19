@@ -76,7 +76,7 @@ if (window.razorpayId) {
 				amount: amount * 100,
 				name: window.razorpayName,
 				description: window.razorpayDescription,
-				handler: callback || window.onDonate
+				handler: resolve
 			}).open();
 		});
 
