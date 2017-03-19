@@ -12,16 +12,17 @@
 	    <link rel="shortcut icon" href="{{asset "/favicon.ico"}}">
 
 		<link rel="stylesheet" href="{{asset "css/style.css"}}">
-		<script src="{{asset "js/base.js"}}"></script>
 
 		{{ghost_head}}
+
+		<script src="{{asset "js/base.js"}}"></script>
 	</head>
 	<body class="{{body_class}}{{tags autolink='off'}}">
 		<div class="wrapper">
 			{{{body}}}
 
 			<header>
-				<a class="logo" href="/">
+				<a class="logo" href="{{@blog.url}}">
 					{{>logo}}
 					<svg class="logo-h"
 						xmlns="http://www.w3.org/2000/svg"
