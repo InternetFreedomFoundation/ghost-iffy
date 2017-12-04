@@ -1,6 +1,8 @@
 {
-  "name": "Iffy",
-  "version": "1.0.0",
+  "name": "iffy",
+  "version": "1.0.1",
   "description": "Internet Freedom Foundation Ghost Theme",
-  "author": "Internet Freedom Foundation"
+  "author": {
+        "email": "karthikb351@gmail.com"
+    }
 }
