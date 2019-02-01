@@ -83,6 +83,33 @@ if (window.razorpayId) {
 		if (window.onDonate) return promise.then(onDonate);
 		return promise;
 	}
+	window.donateRecurring = function (plan_id) {
+		return $.ajax({
+			data: JSON.stringify({
+				"plan_id": plan_id
+			}),
+			type: 'POST',
+			processData: false,
+    		contentType: 'application/json',
+			url: 'https://v7e5vmxy2g.execute-api.ap-south-1.amazonaws.com/dev/donate/subscription/create'
+		})
+		.then(function(response) {
+			return response.id;
+		})
+		.then(function(subscriptionId) {
+			var promise = new Promise(function (resolve, reject) {
+				new Razorpay({
+					key: window.razorpayIdTest,
+					subscription_id: subscriptionId,
+					name: window.razorpayName,
+					description: window.razorpayDescription,
+					handler: resolve
+				}).open();
+			});
+			if (window.onDonate) return promise.then(onDonate);
+			return promise;
+		})
+	}
 }
 
 $(function() {
