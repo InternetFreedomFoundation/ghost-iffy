@@ -83,6 +83,47 @@ if (window.razorpayId) {
 		if (window.onDonate) return promise.then(onDonate);
 		return promise;
 	}
+	window.donateRecurring = function () {
+		var plan_id = $('input[name="plan_id"]:checked').val()
+		var fullname = $('#donateFullname').val()
+		var mobile = $('#donateMobile').val()
+		var email = $('#donateEmail').val()
+		var pan = $('#donatePan').val()
+
+		var payload = {
+			"plan_id": plan_id,
+			"fullname": fullname,
+			"email": email,
+			"mobile": mobile,
+			"pan": pan
+		}
+
+		console.log(payload)
+		
+		$.ajax({
+			data: JSON.stringify(payload),
+			type: 'POST',
+			processData: false,
+    		contentType: 'application/json',
+			url: 'https://api.internetfreedom.in/dev/donate/subscription/create'
+		})
+		.then(function(response) {
+			return response.id;
+		})
+		.then(function(subscriptionId) {
+			var promise = new Promise(function (resolve, reject) {
+				new Razorpay({
+					key: window.razorpaySubscriptionId,
+					subscription_id: subscriptionId,
+					name: window.razorpayName,
+					description: window.razorpayDescription,
+					handler: resolve
+				}).open();
+			});
+			if (window.onDonate) return promise.then(onDonate);
+			return promise;
+		})
+	}
 }
 
 $(function() {
