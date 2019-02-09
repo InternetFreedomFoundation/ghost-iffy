@@ -83,15 +83,29 @@ if (window.razorpayId) {
 		if (window.onDonate) return promise.then(onDonate);
 		return promise;
 	}
-	window.donateRecurring = function (plan_id) {
-		return $.ajax({
-			data: JSON.stringify({
-				"plan_id": plan_id
-			}),
+	window.donateRecurring = function () {
+		var plan_id = $('input[name="plan_id"]:checked').val()
+		var fullname = $('#donateFullname').val()
+		var mobile = $('#donateMobile').val()
+		var email = $('#donateEmail').val()
+		var pan = $('#donatePan').val()
+
+		var payload = {
+			"plan_id": plan_id,
+			"fullname": fullname,
+			"email": email,
+			"mobile": mobile,
+			"pan": pan
+		}
+
+		console.log(payload)
+		
+		$.ajax({
+			data: JSON.stringify(payload),
 			type: 'POST',
 			processData: false,
     		contentType: 'application/json',
-			url: 'https://v7e5vmxy2g.execute-api.ap-south-1.amazonaws.com/dev/donate/subscription/create'
+			url: 'https://api.internetfreedom.in/dev/donate/subscription/create'
 		})
 		.then(function(response) {
 			return response.id;
@@ -99,7 +113,7 @@ if (window.razorpayId) {
 		.then(function(subscriptionId) {
 			var promise = new Promise(function (resolve, reject) {
 				new Razorpay({
-					key: window.razorpayIdTest,
+					key: window.razorpaySubscriptionId,
 					subscription_id: subscriptionId,
 					name: window.razorpayName,
 					description: window.razorpayDescription,
