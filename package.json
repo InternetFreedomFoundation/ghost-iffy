@@ -7,6 +7,9 @@
     "name":  "Internet Freedom Foundation",
     "email": "tech@internetfreedom.in"
   },
+  "engines": {
+    "ghost-api": "v2"
+  },
   "config": {
     "posts_per_page": 6
   }
