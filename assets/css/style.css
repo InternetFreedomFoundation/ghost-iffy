@@ -259,10 +259,8 @@ header {
         .logo .logo-v { display: block; max-height: 12em; }
         .logo .logo-h { display: none; max-width: 10em; }
 
-    	.logo path.dark { fill: #543; }
-    	.logo path.light { fill: #a64; }
-    	a:hover.logo path.light { fill: #c75; }
-    	a:hover.logo path.dark { fill: #333; }
+    	a.logo { color: #543; fill: #a64; }
+    	a:hover.logo { color: #333; fill: #c75; }
 
         .logo svg {
             flex: 1 1 auto;
