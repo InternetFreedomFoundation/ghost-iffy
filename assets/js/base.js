@@ -84,45 +84,102 @@ if (window.razorpayId) {
 		return promise;
 	}
 	window.donateRecurring = function () {
+		var planMap = {
+			"plan_BuFEw6LkoTdbzE": 100,
+			"plan_BuFF8DNcNbgZbw": 250,
+			"plan_BuFFMbAG0vCm51": 600,
+			"plan_BuFFaLWJtfFsQW": 1000,
+			"plan_BuFFo1NQ7Lakem": 1500
+		};
+
+
 		var plan_id = $('input[name="plan_id"]:checked').val()
 		var fullname = $('#donateFullname').val()
 		var mobile = $('#donateMobile').val()
 		var email = $('#donateEmail').val()
 		var pan = $('#donatePan').val()
+		var method = $('input[name="donateMethod"]:checked').val()
+		var amount = planMap[plan_id];
 
-		var payload = {
-			"plan_id": plan_id,
-			"fullname": fullname,
-			"email": email,
-			"mobile": mobile,
-			"pan": pan
+		var payload;
+
+		if (method === "credit") {
+
+			payload = {
+				"plan_id": plan_id,
+				"fullname": fullname,
+				"email": email,
+				"mobile": mobile,
+				"pan": pan
+			}
+	
+			
+			$.ajax({
+				data: JSON.stringify(payload),
+				type: 'POST',
+				processData: false,
+				contentType: 'application/json',
+				url: 'https://api.internetfreedom.in/dev/donate/subscription/create'
+			})
+			.then(function(response) {
+				return response.id;
+			})
+			.then(function(subscriptionId) {
+				var promise = new Promise(function (resolve, reject) {
+					new Razorpay({
+						key: window.razorpaySubscriptionId,
+						subscription_id: subscriptionId,
+						name: window.razorpayName,
+						description: window.razorpayDescription,
+						prefill: {
+							"name": fullname,
+							"email": email,
+							"contact": mobile
+						  },
+						handler: resolve
+					}).open();
+				});
+				if (window.onDonate) return promise.then(onDonate);
+				return promise;
+			})
+			
 		}
 
-		console.log(payload)
-		
-		$.ajax({
-			data: JSON.stringify(payload),
-			type: 'POST',
-			processData: false,
-    		contentType: 'application/json',
-			url: 'https://api.internetfreedom.in/dev/donate/subscription/create'
-		})
-		.then(function(response) {
-			return response.id;
-		})
-		.then(function(subscriptionId) {
-			var promise = new Promise(function (resolve, reject) {
-				new Razorpay({
-					key: window.razorpaySubscriptionId,
-					subscription_id: subscriptionId,
-					name: window.razorpayName,
-					description: window.razorpayDescription,
-					handler: resolve
-				}).open();
-			});
-			if (window.onDonate) return promise.then(onDonate);
-			return promise;
-		})
+		// If method is emandate
+		else {
+			payload = {
+				"name": fullname,
+				"email": email,
+				"contact": mobile,
+				"max_amount": amount,
+				"pan": pan,
+				"plan": plan_id
+			}
+			
+			$.ajax({
+				data: JSON.stringify(payload),
+				type: 'POST',
+				processData: false,
+				contentType: 'application/json',
+				url: 'https://api.internetfreedom.in/subscription/create'
+			})
+			.then(function(response) {
+
+				var promise = new Promise(function (resolve, reject) {
+					new Razorpay({
+						key: window.razorpayEMandateId,
+						customer_id: response.customer_id,
+						order_id: response.order_id,
+						recurring: 1,
+						name: window.razorpayName,
+						description: window.razorpayDescription,
+						handler: resolve
+					}).open();
+				});
+				if (window.onDonate) return promise.then(onDonate);
+				return promise;
+			})
+		}
 	}
 }
 
