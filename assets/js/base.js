@@ -151,7 +151,7 @@ if (window.razorpayId) {
 				"name": fullname,
 				"email": email,
 				"contact": mobile,
-				"max_amount": amount,
+				"max_amount": amount * 100,
 				"pan": pan,
 				"plan": plan_id
 			}
