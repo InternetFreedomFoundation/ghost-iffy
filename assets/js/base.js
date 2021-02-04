@@ -89,7 +89,8 @@ if (window.razorpayId) {
 			"plan_BuFF8DNcNbgZbw": 250,
 			"plan_BuFFMbAG0vCm51": 600,
 			"plan_BuFFaLWJtfFsQW": 1000,
-			"plan_BuFFo1NQ7Lakem": 1500
+			"plan_BuFFo1NQ7Lakem": 1500,
+			"plan_GV1ma2L2YFL0h9": 2000
 		};
 
 
