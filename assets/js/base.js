@@ -70,12 +70,16 @@ if (window.googleAnalyticsId) {
 
 if (window.razorpayId) {
 	window.donate = function (amount) {
+		var oneTimefullname = $('#donateOneTimeFullname').val()
 		var promise = new Promise(function (resolve, reject) {
 			new Razorpay({
 				key: window.razorpayId,
 				amount: amount * 100,
 				name: window.razorpayName,
 				description: window.razorpayDescription,
+				prefill: {
+					"name": oneTimefullname,
+				  },
 				handler: resolve
 			}).open();
 		});
