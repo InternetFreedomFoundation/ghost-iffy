@@ -70,12 +70,16 @@ if (window.googleAnalyticsId) {
 
 if (window.razorpayId) {
 	window.donate = function (amount) {
+		var oneTimefullname = $('#donateOneTimeFullname').val()
 		var promise = new Promise(function (resolve, reject) {
 			new Razorpay({
 				key: window.razorpayId,
 				amount: amount * 100,
 				name: window.razorpayName,
 				description: window.razorpayDescription,
+				prefill: {
+					"name": oneTimefullname,
+				  },
 				handler: resolve
 			}).open();
 		});
@@ -144,6 +148,42 @@ if (window.razorpayId) {
 				return promise;
 			})
 			
+		}
+
+		// If method is upi
+		else if (method === "upi") {
+			payload = {
+				"name": fullname,
+				"email": email,
+				"contact": mobile,
+				"max_amount": amount * 100,
+				"pan": pan,
+				"plan": plan_id
+			}
+			
+			$.ajax({
+				data: JSON.stringify(payload),
+				type: 'POST',
+				processData: false,
+				contentType: 'application/json',
+				url: 'https://api.internetfreedom.in/upi/create'
+			})
+			.then(function(response) {
+
+				var promise = new Promise(function (resolve, reject) {
+					new Razorpay({
+						key: window.razorpayEMandateId,
+						customer_id: response.customer_id,
+						order_id: response.order_id,
+						recurring: 1,
+						name: window.razorpayName,
+						description: window.razorpayDescription,
+						handler: resolve
+					}).open();
+				});
+				if (window.onDonate) return promise.then(onDonate);
+				return promise;
+			})
 		}
 
 		// If method is emandate
