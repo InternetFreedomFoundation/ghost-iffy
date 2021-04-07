@@ -8,7 +8,7 @@
     "email": "tech@internetfreedom.in"
   },
   "engines": {
-    "ghost-api": "v2"
+    "ghost-api": "v4"
   },
   "config": {
     "posts_per_page": 6
