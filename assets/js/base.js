@@ -82,6 +82,10 @@ if (window.razorpayId) {
 				prefill: {
 					"name": oneTimefullname,
 				  },
+				  notes: {
+					"PAN": oneTimepan,
+					"ADDRESS":oneTimeAddress,
+				},
 				handler: resolve
 			}).open();
 		});
@@ -144,6 +148,10 @@ if (window.razorpayId) {
 							"email": email,
 							"contact": mobile
 						  },
+						notes: {
+							"PAN":pan,
+							"ADDRESS":address,
+						},
 						handler: resolve
 					}).open();
 				});
@@ -181,6 +189,10 @@ if (window.razorpayId) {
 						recurring: 1,
 						name: window.razorpayName,
 						description: window.razorpayDescription,
+						notes: {
+							"PAN":pan,
+							"ADDRESS":address,
+						},
 						handler: resolve
 					}).open();
 				});
@@ -217,7 +229,11 @@ if (window.razorpayId) {
 						recurring: 1,
 						name: window.razorpayName,
 						description: window.razorpayDescription,
-						handler: resolve
+						handler: resolve,
+						notes: {
+							"PAN":pan,
+							"ADDRESS":address,
+						},
 					}).open();
 				});
 				if (window.onDonate) return promise.then(onDonate);
