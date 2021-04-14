@@ -71,6 +71,8 @@ if (window.googleAnalyticsId) {
 if (window.razorpayId) {
 	window.donate = function (amount) {
 		var oneTimefullname = $('#donateOneTimeFullname').val()
+		var oneTimepan = $('#donateOneTimePan').val()
+		var oneTimeAddress = $('#donateOneTimeAddress').val()
 		var promise = new Promise(function (resolve, reject) {
 			new Razorpay({
 				key: window.razorpayId,
@@ -103,6 +105,7 @@ if (window.razorpayId) {
 		var mobile = $('#donateMobile').val()
 		var email = $('#donateEmail').val()
 		var pan = $('#donatePan').val()
+		var address = $('#donateAddress').val()
 		var method = $('input[name="donateMethod"]:checked').val()
 		var amount = planMap[plan_id];
 
