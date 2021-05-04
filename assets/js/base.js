@@ -169,7 +169,8 @@ if (window.razorpayId) {
 				"contact": mobile,
 				"max_amount": amount * 100,
 				"pan": pan,
-				"plan": plan_id
+				"plan": plan_id,
+				"address": address
 			}
 			
 			$.ajax({
@@ -209,7 +210,8 @@ if (window.razorpayId) {
 				"contact": mobile,
 				"max_amount": amount * 100,
 				"pan": pan,
-				"plan": plan_id
+				"plan": plan_id,
+				"address": address
 			}
 			
 			$.ajax({
