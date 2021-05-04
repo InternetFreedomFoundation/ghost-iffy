@@ -83,6 +83,7 @@ if (window.razorpayId) {
 					"name": oneTimefullname,
 				  },
 				  notes: {
+					"NAME": oneTimefullname,
 					"PAN": oneTimepan,
 					"ADDRESS":oneTimeAddress,
 				},
