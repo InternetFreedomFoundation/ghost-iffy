@@ -255,7 +255,7 @@ if (window.razorpayId) {
 					}).open();
 				}).then(()=>{
 					window.trackDonation('recurring', amount, method)
-			   });;
+			   });
 				if (window.onDonate) return promise.then(onDonate);
 				return promise;
 			})
