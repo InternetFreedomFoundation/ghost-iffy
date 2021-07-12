@@ -68,6 +68,15 @@ if (window.googleAnalyticsId) {
 	ga('send', 'pageview');
 }
 
+window.trackDonation = function (type, amount, method) {
+	if (type === 'one-time') {
+		plausible('donation', {props: {type:'one-time', amount: amount, method: method}})
+	}
+	if (type === 'recurring') {
+		plausible('donation', {props: {type:'recurring', amount: amount, method: method}})
+	}
+}
+
 if (window.razorpayId) {
 	window.donate = function (amount) {
 		var oneTimefullname = $('#donateOneTimeFullname').val()
@@ -89,6 +98,8 @@ if (window.razorpayId) {
 				},
 				handler: resolve
 			}).open();
+		}).then(()=>{
+		 	window.trackDonation('one-time', amount, 'unknown')
 		});
 
 		if (window.onDonate) return promise.then(onDonate);
@@ -155,7 +166,9 @@ if (window.razorpayId) {
 						},
 						handler: resolve
 					}).open();
-				});
+				}).then(()=>{
+					window.trackDonation('recurring', amount, method)
+			   });
 				if (window.onDonate) return promise.then(onDonate);
 				return promise;
 			})
@@ -197,7 +210,9 @@ if (window.razorpayId) {
 						},
 						handler: resolve
 					}).open();
-				});
+				}).then(()=>{
+					window.trackDonation('recurring', amount, method)
+			   });
 				if (window.onDonate) return promise.then(onDonate);
 				return promise;
 			})
@@ -238,7 +253,9 @@ if (window.razorpayId) {
 							"ADDRESS":address,
 						},
 					}).open();
-				});
+				}).then(()=>{
+					window.trackDonation('recurring', amount, method)
+			   });
 				if (window.onDonate) return promise.then(onDonate);
 				return promise;
 			})
