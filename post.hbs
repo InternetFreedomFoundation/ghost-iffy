@@ -7,22 +7,42 @@ the {body} of the default.hbs template, which contains our header/footer. }}
 {{#post}}
 
 <main class="post-view-content" role="main">
-    <article class="{{post_class}}">
-        <h1>{{ title }}</h1>
+  <article class="{{post_class}}">
+    <h1>{{ title }}</h1>
 
-        <section class="post-content">
-          {{ content }}
+    <section class="post-content">
+      {{ content }}
 
-          <div class="post-tags">
-            {{tags separator=""}}
-          </div>
-        </section>
+      <div class="post-tags">
+        {{tags separator=""}}
+      </div>
+    </section>
 
-        <section class="post-footer">
-            <time class="post__date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMMM YYYY"}}</time>
-            {{> share}}
-        </section>
-    </article>
+    <section class="post-footer">
+      <time class="post__date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMMM YYYY"}}</time>
+      {{> share}}
+    </section>
+
+    <section class="post-full-comments">
+      <div id='discourse-comments'></div>
+
+      <script type="text/javascript">
+        if (window.location.pathname.indexOf('/p/') < 0) {
+          DiscourseEmbed = {
+            discourseUrl: 'https://forum.internetfreedom.in/',
+            discourseEmbedUrl: '{{url absolute="true"}}'
+          };
+
+          (function () {
+            var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+          })();
+        }
+      </script>
+    </section>
+
+  </article>
 </main>
 
 {{/post}}
