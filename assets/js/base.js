@@ -58,16 +58,6 @@ Iffy Theme
 https://github.com/internetfreedomfoundation/iffy
 Copyright (c) 2016-2017 Internet Freedom Foundation
 */
-if (window.googleAnalyticsId) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-	ga('create', window.googleAnalyticsId, 'auto');
-	ga('send', 'pageview');
-}
-
 window.trackDonation = function (type, amount, method) {
 	if (type === 'one-time') {
 		plausible('donation', {props: {type:'one-time', amount: amount, method: method}})
