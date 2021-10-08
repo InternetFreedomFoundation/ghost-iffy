@@ -108,11 +108,12 @@ if (window.razorpayId) {
 
 		var plan_id = $('input[name="plan_id"]:checked').val()
 		var fullname = $('#donateFullname').val()
-		var mobile = $('#donateMobile').val()
+		var mobile = parseInt($('#donateMobile').val())
 		var email = $('#donateEmail').val()
 		var pan = $('#donatePan').val()
 		var address = $('#donateAddress').val()
 		var method = $('input[name="donateMethod"]:checked').val()
+		var pinCode = parseInt($('#pinCode').val())
 		var amount = planMap[plan_id];
 
 		var payload;
@@ -120,11 +121,16 @@ if (window.razorpayId) {
 		if (method === "credit") {
 
 			payload = {
-				"plan_id": plan_id,
-				"fullname": fullname,
+				"plan": plan_id,
+				"name": fullname,
 				"email": email,
-				"mobile": mobile,
-				"pan": pan
+				"contact": mobile,
+				"pan": pan,
+				"max_amount":amount,
+				"address": {
+				"address_line1": address,
+				"pincode": pinCode
+				}
 			}
 	
 			
@@ -133,7 +139,7 @@ if (window.razorpayId) {
 				type: 'POST',
 				processData: false,
 				contentType: 'application/json',
-				url: 'https://api.internetfreedom.in/dev/donate/subscription/create'
+				url: 'https://api.internetfreedom.in/recurring/'
 			})
 			.then(function(response) {
 				return response.id;
@@ -150,10 +156,6 @@ if (window.razorpayId) {
 							"email": email,
 							"contact": mobile
 						  },
-						notes: {
-							"PAN":pan,
-							"ADDRESS":address,
-						},
 						handler: resolve
 					}).open();
 				}).then(()=>{
@@ -163,92 +165,6 @@ if (window.razorpayId) {
 				return promise;
 			})
 			
-		}
-
-		// If method is upi
-		else if (method === "upi") {
-			payload = {
-				"name": fullname,
-				"email": email,
-				"contact": mobile,
-				"max_amount": amount * 100,
-				"pan": pan,
-				"plan": plan_id,
-				"address": address
-			}
-			
-			$.ajax({
-				data: JSON.stringify(payload),
-				type: 'POST',
-				processData: false,
-				contentType: 'application/json',
-				url: 'https://api.internetfreedom.in/upi/create'
-			})
-			.then(function(response) {
-
-				var promise = new Promise(function (resolve, reject) {
-					new Razorpay({
-						key: window.razorpayEMandateId,
-						customer_id: response.customer_id,
-						order_id: response.order_id,
-						recurring: 1,
-						name: window.razorpayName,
-						description: window.razorpayDescription,
-						notes: {
-							"PAN":pan,
-							"ADDRESS":address,
-						},
-						handler: resolve
-					}).open();
-				}).then(()=>{
-					window.trackDonation('recurring', amount, method)
-			   });
-				if (window.onDonate) return promise.then(onDonate);
-				return promise;
-			})
-		}
-
-		// If method is emandate
-		else {
-			payload = {
-				"name": fullname,
-				"email": email,
-				"contact": mobile,
-				"max_amount": amount * 100,
-				"pan": pan,
-				"plan": plan_id,
-				"address": address
-			}
-			
-			$.ajax({
-				data: JSON.stringify(payload),
-				type: 'POST',
-				processData: false,
-				contentType: 'application/json',
-				url: 'https://api.internetfreedom.in/subscription/create'
-			})
-			.then(function(response) {
-
-				var promise = new Promise(function (resolve, reject) {
-					new Razorpay({
-						key: window.razorpayEMandateId,
-						customer_id: response.customer_id,
-						order_id: response.order_id,
-						recurring: 1,
-						name: window.razorpayName,
-						description: window.razorpayDescription,
-						handler: resolve,
-						notes: {
-							"PAN":pan,
-							"ADDRESS":address,
-						},
-					}).open();
-				}).then(()=>{
-					window.trackDonation('recurring', amount, method)
-			   });
-				if (window.onDonate) return promise.then(onDonate);
-				return promise;
-			})
 		}
 	}
 }
