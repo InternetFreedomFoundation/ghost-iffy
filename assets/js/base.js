@@ -166,6 +166,47 @@ if (window.razorpayId) {
 			})
 			
 		}
+	// If method is emandate
+		else {
+			payload = {
+				"name": fullname,
+				"email": email,
+				"contact": mobile,
+				"max_amount": amount * 100,
+				"pan": pan,
+				"plan": plan_id,
+				"address": address
+			}
+			
+			$.ajax({
+				data: JSON.stringify(payload),
+				type: 'POST',
+				processData: false,
+				contentType: 'application/json',
+				url: 'https://api.internetfreedom.in/subscription/create'
+			})
+			.then(function(response) {
+				var promise = new Promise(function (resolve, reject) {
+					new Razorpay({
+						key: window.razorpayEMandateId,
+						customer_id: response.customer_id,
+						order_id: response.order_id,
+						recurring: 1,
+						name: window.razorpayName,
+						description: window.razorpayDescription,
+						handler: resolve,
+						notes: {
+							"PAN":pan,
+							"ADDRESS":address,
+						},
+					}).open();
+				}).then(()=>{
+					window.trackDonation('recurring', amount, method)
+			});
+				if (window.onDonate) return promise.then(onDonate);
+				return promise;
+			})
+		}
 	}
 }
 
