@@ -95,120 +95,195 @@ if (window.razorpayId) {
 		if (window.onDonate) return promise.then(onDonate);
 		return promise;
 	}
-	window.donateRecurring = function () {
-		var planMap = {
-			"plan_BuFEw6LkoTdbzE": 100,
-			"plan_BuFF8DNcNbgZbw": 250,
-			"plan_BuFFMbAG0vCm51": 600,
-			"plan_BuFFaLWJtfFsQW": 1000,
-			"plan_BuFFo1NQ7Lakem": 1500,
-			"plan_GV1ma2L2YFL0h9": 2000
-		};
+	// window.donateRecurring = function () {
+	// 	var planMap = {
+	// 		"plan_BuFEw6LkoTdbzE": 100,
+	// 		"plan_BuFF8DNcNbgZbw": 250,
+	// 		"plan_BuFFMbAG0vCm51": 600,
+	// 		"plan_BuFFaLWJtfFsQW": 1000,
+	// 		"plan_BuFFo1NQ7Lakem": 1500,
+	// 		"plan_GV1ma2L2YFL0h9": 2000
+	// 	};
 
 
-		var plan_id = $('input[name="plan_id"]:checked').val()
-		var fullname = $('#donateFullname').val()
-		var mobile = parseInt($('#donateMobile').val())
-		var email = $('#donateEmail').val()
-		var pan = $('#donatePan').val()
-		var address = $('#donateAddress').val()
-		var method = $('input[name="donateMethod"]:checked').val()
-		var pinCode = parseInt($('#pinCode').val())
-		var amount = planMap[plan_id];
+	// 	var plan_id = $('input[name="plan_id"]:checked').val()
+	// 	var fullname = $('#donateFullname').val()
+	// 	var mobile = parseInt($('#donateMobile').val())
+	// 	var email = $('#donateEmail').val()
+	// 	var pan = $('#donatePan').val()
+	// 	var address = $('#donateAddress').val()
+	// 	var method = $('input[name="donateMethod"]:checked').val()
+	// 	var pinCode = parseInt($('#pinCode').val())
+	// 	var amount = planMap[plan_id];
 
-		var payload;
+	// 	var payload;
 
-		if (method === "credit") {
+	// 	if (method === "credit") {
 
-			payload = {
-				"plan": plan_id,
-				"name": fullname,
-				"email": email,
-				"contact": mobile,
-				"pan": pan,
-				"max_amount":amount,
-				"address": {
-				"address_line1": address,
-				"pincode": pinCode
-				}
-			}
+	// 		payload = {
+	// 			"plan": plan_id,
+	// 			"name": fullname,
+	// 			"email": email,
+	// 			"contact": mobile,
+	// 			"pan": pan,
+	// 			"max_amount":amount,
+	// 			"address": {
+	// 			"address_line1": address,
+	// 			"pincode": pinCode
+	// 			}
+	// 		}
 	
 			
-			$.ajax({
-				data: JSON.stringify(payload),
-				type: 'POST',
-				processData: false,
-				contentType: 'application/json',
-				url: 'https://api.internetfreedom.in/recurring/'
-			})
-			.then(function(response) {
-				return response.id;
-			})
-			.then(function(subscriptionId) {
-				var promise = new Promise(function (resolve, reject) {
-					new Razorpay({
-						key: window.razorpaySubscriptionId,
-						subscription_id: subscriptionId,
-						name: window.razorpayName,
-						description: window.razorpayDescription,
-						prefill: {
-							"name": fullname,
-							"email": email,
-							"contact": mobile
-						  },
-						handler: resolve
-					}).open();
-				}).then(()=>{
-					window.trackDonation('recurring', amount, method)
-			   });
-				if (window.onDonate) return promise.then(onDonate);
-				return promise;
-			})
+	// 		$.ajax({
+	// 			data: JSON.stringify(payload),
+	// 			type: 'POST',
+	// 			processData: false,
+	// 			contentType: 'application/json',
+	// 			url: 'https://api.internetfreedom.in/recurring/'
+	// 		})
+	// 		.then(function(response) {
+	// 			return response.id;
+	// 		})
+	// 		.then(function(subscriptionId) {
+	// 			var promise = new Promise(function (resolve, reject) {
+	// 				new Razorpay({
+	// 					key: window.razorpaySubscriptionId,
+	// 					subscription_id: subscriptionId,
+	// 					name: window.razorpayName,
+	// 					description: window.razorpayDescription,
+	// 					prefill: {
+	// 						"name": fullname,
+	// 						"email": email,
+	// 						"contact": mobile
+	// 					  },
+	// 					handler: resolve
+	// 				}).open();
+	// 			}).then(()=>{
+	// 				window.trackDonation('recurring', amount, method)
+	// 		   });
+	// 			if (window.onDonate) return promise.then(onDonate);
+	// 			return promise;
+	// 		})
 			
-		}
-	// If method is emandate
-		else {
-			payload = {
-				"name": fullname,
-				"email": email,
-				"contact": mobile,
-				"max_amount": amount * 100,
-				"pan": pan,
-				"plan": plan_id,
-				"address": address
-			}
+	// 	}
+	// // If method is emandate
+	// 	else {
+	// 		payload = {
+	// 			"name": fullname,
+	// 			"email": email,
+	// 			"contact": mobile,
+	// 			"max_amount": amount * 100,
+	// 			"pan": pan,
+	// 			"plan": plan_id,
+	// 			"address": address
+	// 		}
 			
-			$.ajax({
-				data: JSON.stringify(payload),
-				type: 'POST',
-				processData: false,
-				contentType: 'application/json',
-				url: 'https://api.internetfreedom.in/subscription/create'
-			})
-			.then(function(response) {
-				var promise = new Promise(function (resolve, reject) {
-					new Razorpay({
-						key: window.razorpayEMandateId,
-						customer_id: response.customer_id,
-						order_id: response.order_id,
-						recurring: 1,
-						name: window.razorpayName,
-						description: window.razorpayDescription,
-						handler: resolve,
-						notes: {
-							"PAN":pan,
-							"ADDRESS":address,
-						},
-					}).open();
-				}).then(()=>{
-					window.trackDonation('recurring', amount, method)
-			});
-				if (window.onDonate) return promise.then(onDonate);
-				return promise;
-			})
+	// 		$.ajax({
+	// 			data: JSON.stringify(payload),
+	// 			type: 'POST',
+	// 			processData: false,
+	// 			contentType: 'application/json',
+	// 			url: 'https://api.internetfreedom.in/subscription/create'
+	// 		})
+	// 		.then(function(response) {
+	// 			var promise = new Promise(function (resolve, reject) {
+	// 				new Razorpay({
+	// 					key: window.razorpayEMandateId,
+	// 					customer_id: response.customer_id,
+	// 					order_id: response.order_id,
+	// 					recurring: 1,
+	// 					name: window.razorpayName,
+	// 					description: window.razorpayDescription,
+	// 					handler: resolve,
+	// 					notes: {
+	// 						"PAN":pan,
+	// 						"ADDRESS":address,
+	// 					},
+	// 				}).open();
+	// 			}).then(()=>{
+	// 				window.trackDonation('recurring', amount, method)
+	// 		});
+	// 			if (window.onDonate) return promise.then(onDonate);
+	// 			return promise;
+	// 		})
+	// 	}
+	// }
+}
+
+/**
+ * Helper function for POSTing data as JSON with fetch.
+ */
+ async function postFormDataAsJson({ url, formData }) {
+	const plainFormData = Object.fromEntries(formData.entries());
+	var plan_id = $('input[name="plan_id"]:checked').val()
+	var planMap = {
+		"plan_BuFEw6LkoTdbzE": 100,
+		"plan_BuFF8DNcNbgZbw": 250,
+		"plan_BuFFMbAG0vCm51": 600,
+		"plan_BuFFaLWJtfFsQW": 1000,
+		"plan_BuFFo1NQ7Lakem": 1500,
+		"plan_GV1ma2L2YFL0h9": 2000
+	};
+	var amount = planMap[plan_id];
+
+
+	formPayload = {
+		"plan": plan_id,
+		"name": plainFormData.name,
+		"email": plainFormData.email,
+		"contact": plainFormData.contact,
+		"pan": plainFormData.pan,
+		"max_amount":amount,
+		"address": {
+		"address_line1": plainFormData.address_line1,
+		"pincode": plainFormData.pincode
 		}
 	}
+
+	const formDataJsonString = JSON.stringify(formPayload);
+
+	const fetchOptions = {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			Accept: "application/json",
+		},
+		body: formDataJsonString,
+	};
+
+	const response = await fetch(url, fetchOptions);
+
+	if (!response.ok) {
+		const errorMessage = await response.text();
+		throw new Error(errorMessage);
+	}
+
+	return response.json();
 }
+
+/**
+ * Event handler for a submit form submit event.
+ */
+async function handleFormSubmit(event) {
+	event.preventDefault();
+
+	const form = event.currentTarget;
+	const url = form.action;
+
+	try {
+		const formData = new FormData(form);
+		await postFormDataAsJson({ url, formData });
+
+		alert("[Action Required] We’ve sent you an SMS & Email with details on further action.");
+		form.reset();
+	} catch (error) {
+		alert("Something went wrong, Please try again later");
+		form.reset();
+	}
+}
+
+const DonateForm = document.getElementById("subscription-form");
+DonateForm.addEventListener("submit", handleFormSubmit);
 
 $(function() {
 	// Toggle the menu when the logo is clicked on mobile
