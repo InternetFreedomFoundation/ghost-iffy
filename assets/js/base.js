@@ -236,7 +236,7 @@ if (window.razorpayId) {
 		"max_amount":amount,
 		"address": {
 		"address_line1": plainFormData.address_line1,
-		"pincode": plainFormData.pincode
+		"pincode": parseInt(plainFormData.pincode)
 		}
 	}
 
