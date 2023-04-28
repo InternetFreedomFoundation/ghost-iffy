@@ -14,6 +14,7 @@ window.trackDonation = function (type, amount, method) {
 
 if (window.razorpayId) {
 	window.donate = function (amount) {
+		var oneTimeEmail = $('#donateOneTimeEmail').val()
 		var oneTimefullname = $('#donateOneTimeFullname').val()
 		var oneTimepan = $('#donateOneTimePan').val()
 		var oneTimeAddress = $('#donateOneTimeAddress').val()
@@ -25,11 +26,13 @@ if (window.razorpayId) {
 				description: window.razorpayDescription,
 				prefill: {
 					"name": oneTimefullname,
+					"email": oneTimeEmail
 				},
 				notes: {
 					"NAME": oneTimefullname,
 					"PAN": oneTimepan,
 					"ADDRESS": oneTimeAddress,
+					"EMAIL": oneTimeEmail
 				},
 				handler: resolve
 			}).open();
