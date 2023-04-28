@@ -5,10 +5,10 @@ Copyright (c) 2016-2017 Internet Freedom Foundation
 */
 window.trackDonation = function (type, amount, method) {
 	if (type === 'one-time') {
-		plausible('donation', {props: {type:'one-time', amount: amount, method: method}})
+		plausible('donation', { props: { type: 'one-time', amount: amount, method: method } })
 	}
 	if (type === 'recurring') {
-		plausible('donation', {props: {type:'recurring', amount: amount, method: method}})
+		plausible('donation', { props: { type: 'recurring', amount: amount, method: method } })
 	}
 }
 
@@ -25,16 +25,16 @@ if (window.razorpayId) {
 				description: window.razorpayDescription,
 				prefill: {
 					"name": oneTimefullname,
-				  },
-				  notes: {
+				},
+				notes: {
 					"NAME": oneTimefullname,
 					"PAN": oneTimepan,
-					"ADDRESS":oneTimeAddress,
+					"ADDRESS": oneTimeAddress,
 				},
 				handler: resolve
 			}).open();
-		}).then(()=>{
-		 	window.trackDonation('one-time', amount, 'unknown')
+		}).then(() => {
+			window.trackDonation('one-time', amount, 'unknown')
 		});
 
 		if (window.onDonate) return promise.then(onDonate);
@@ -45,31 +45,32 @@ if (window.razorpayId) {
 /**
  * Helper function for POSTing data as JSON with fetch.
  */
- async function postFormDataAsJson({ url, formData }) {
+async function postFormDataAsJson({ url, formData }) {
 	const plainFormData = Object.fromEntries(formData.entries());
-	var plan_id = $('input[name="plan_id"]:checked').val()
-	var planMap = {
-		"plan_BuFEw6LkoTdbzE": 100,
-		"plan_BuFF8DNcNbgZbw": 250,
-		"plan_BuFFMbAG0vCm51": 600,
-		"plan_BuFFaLWJtfFsQW": 1000,
-		"plan_BuFFo1NQ7Lakem": 1500,
-		"plan_GV1ma2L2YFL0h9": 2000
-	};
-	var amount = planMap[plan_id];
 
+	var planMap = {
+		"plan_LZE0Tlk0RfSHwy": 100,
+		"plan_LZE55rEq3kjtqn": 750,
+		"plan_LZFgMUbNksuFHf": 2000,
+		"plan_LZFjJpwgImVheg": 5000,
+		"plan_LZFlokJYeyFFg0": 10000,
+		"plan_LZFqRtuvf6tT0C": 100000,
+		"plan_LZFriB0wFn3a4t": 500000
+	};
+	var amount = planMap[plainFormData.plan];
 
 	formPayload = {
-		"plan": plan_id,
+		"plan": plainFormData.plan,
 		"name": plainFormData.name,
 		"email": plainFormData.email,
 		"contact": plainFormData.contact,
 		"pan": plainFormData.pan,
-		"max_amount":amount,
+		"max_amount": amount,
 		"address": {
-		"address_line1": plainFormData.address_line1,
-		"pincode": parseInt(plainFormData.pincode)
-		}
+			"address_line1": plainFormData.address_line1,
+			"pincode": parseInt(plainFormData.pincode)
+		},
+		"type": plainFormData.type
 	}
 
 	const formDataJsonString = JSON.stringify(formPayload);
@@ -90,7 +91,27 @@ if (window.razorpayId) {
 		throw new Error(errorMessage);
 	}
 
-	return response.json();
+	const subscriptionResponse = await response.json();
+
+	var promise = new Promise(function (resolve) {
+		new Razorpay({
+			key: window.razorpaySubscriptionId,
+			subscription_id: subscriptionResponse.id,
+			name: window.razorpayName,
+			description: window.razorpayDescription,
+			prefill: {
+				"name": plainFormData.name,
+				"email": plainFormData.email,
+				"contact": plainFormData.contact
+			},
+			notes: {
+				"REFERENCE": subscriptionResponse.reference
+			},
+			handler: resolve
+		}).open();
+	});
+
+	return promise;
 }
 
 /**
@@ -115,10 +136,10 @@ async function handleFormSubmit(event) {
 const DonateForm = document.getElementById("subscription-form");
 DonateForm.addEventListener("submit", handleFormSubmit);
 
-$(function() {
+$(function () {
 	// Toggle the menu when the logo is clicked on mobile
 	$('.logo').click(function (event) {
-		if($('.toggle-menu').css('display') !== 'none') {
+		if ($('.toggle-menu').css('display') !== 'none') {
 			$('.menu').toggleClass('show');
 			return false;
 		}
@@ -129,8 +150,8 @@ $(function() {
 		if (!event.target.checked) return;
 		$('input[type=radio][name=' +
 			event.target.name + ']').each(function () {
-			if (this !== event.target) $(this).change();
-		});
+				if (this !== event.target) $(this).change();
+			});
 	});
 
 	// Toggle element visibility on checkbox / radio button change
